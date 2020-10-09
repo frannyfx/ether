@@ -7,5 +7,5 @@ Remotely control LED strips using Raspberry PIs and Fourier Transforms.
 - The server does not cleanly handle client disconnections.
 
 ## Credits
-- Francesco Compagnoni
-- Kamal Asmatpoor
+- Francesco Compagnoni - https://github.com/frannyfx
+- Kamal Asmatpoor - https://github.com/kamgg
