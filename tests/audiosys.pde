@@ -10,37 +10,27 @@ WebsocketClient ws;
 // Connection
 String serverURL = "ws://localhost:1337";
 
-// Interpolation
-int DELTA = 400;
 
 // Previous values
-int redA = 0;
-int greenA = 0;
-int blueA = 0;
-
-// New Values
-int redB = 0;
-int greenB = 0;
-int blueB = 0;
+int red = 0;
+int green = 0;
+int blue = 0;
 
 void setup() {
   ws = new WebsocketClient(this, serverURL);
-  size(400, 400);
   fill(0, 0, 0);
   noStroke();
   smooth();
+  fullScreen();
 }
 
 void webSocketEvent(String msg) {
   String[] rgbArray = msg.split(",");
-  redA = Integer.parseInt(rgbArray[0]);
-  greenA = Integer.parseInt(rgbArray[1]);
-  blueA = Integer.parseInt(rgbArray[2]);
+  red = Integer.parseInt(rgbArray[0]);
+  green = Integer.parseInt(rgbArray[1]);
+  blue = Integer.parseInt(rgbArray[2]);
 }
 
 void draw() {
-  redB = (int)(lerp(redB, redA, (float)DELTA / 1000.0f));
-  greenB = (int)(lerp(greenB, greenA, (float)DELTA / 1000.0f));
-  blueB = (int)(lerp(blueB, blueA, (float)DELTA / 1000.0f));
-  background(redB, greenB, blueB);
+  background(red, green, blue);
 }
