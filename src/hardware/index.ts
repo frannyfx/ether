@@ -14,7 +14,7 @@ async function start() {
 	blue = new Gpio(config.hardware.pins.blue, { mode: Gpio.OUTPUT });
 }
 
-function setColour(r: number, g: number, b: number) {
+export function setColour(r: number, g: number, b: number) {
 	logger.info(`Set LED colour to ${r}, ${g}, ${b}.`);
 	red.pwmWrite(r);
 	green.pwmWrite(g);
@@ -30,5 +30,5 @@ async function loop() {
 }
 
 export default {
-	start, stop, setColour
+	start, stop
 };
