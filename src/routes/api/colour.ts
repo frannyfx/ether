@@ -6,7 +6,7 @@ const route : Route = {
 	method: Method.POST,
 	url: "/colour/:red/:green/:blue",
 	handler: (request : any, response) => {
-		setColour(parseInt(request.params.red), 0, 0);
+		setColour(parseInt(request.params.red), parseInt(request.params.green), parseInt(request.params.blue));
 		response.send({ok: true});
 	}
 };
