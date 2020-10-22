@@ -8,7 +8,8 @@ import path from "path";
 export enum Method {
 	GET = 0,
 	POST = 1,
-	DELETE = 2
+	DELETE = 2,
+	PUT = 3
 }
 
 export interface Handler {
@@ -72,6 +73,10 @@ function registerRoute(fastify: any, route: Route) {
 		}
 		case Method.DELETE: {
 			register = (url: any, handler: any) => fastify.delete(url, handler);
+			break;
+		}
+		case Method.PUT: {
+			register = (url: any, handler: any) => fastify.put(url, handler);
 			break;
 		}
 		default: {
