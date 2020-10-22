@@ -65,7 +65,7 @@ async function start() {
 		// Start loop.
 		loop();
 	} catch (e) {
-		logger.warn("GPIO did not initialise correctly.");
+		logger.warn(`GPIO did not initialise correctly: ${e}`);
 	}
 }
 
