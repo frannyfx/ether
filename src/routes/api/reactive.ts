@@ -1,5 +1,6 @@
-import { Route, Method } from "../../server/router"
-import { getHost, setHost } from "../../hardware/reactive"
+import { Route, Method } from "../../server/router";
+import { getMode, Mode } from "../../hardware";
+import { getHost, setHost } from "../../hardware/reactive";
 
 const route : Array<Route> = [{
 	method: Method.GET,
@@ -11,6 +12,12 @@ const route : Array<Route> = [{
 	method: Method.PUT,
 	url: "/api/reactive/host/:host",
 	handler: (request: any, response) => {
+		// Don't allow the user to set the host if we're not in reactive mode.
+		if (getMode() != Mode.REACTIVE) {
+			response.send({ok: false});
+			return;
+		}
+
 		try {
 			// Parse host & port.
 			let hostAndPort = request.params.host.split(":");

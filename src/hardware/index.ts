@@ -183,7 +183,7 @@ function loop() {
 				writeColour(getNextFadeColour());
 				break;
 			} else {
-				
+				writeColour(getNextReactiveColour());
 			}
 			break;
 		}
