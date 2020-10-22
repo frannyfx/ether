@@ -1,11 +1,12 @@
 import { Route, Method } from "../../server/router"
-import { setColour } from "../../hardware"
+import { setColour, setMode, Mode } from "../../hardware"
 
 const route : Array<Route> = [{
 	method: Method.PUT,
 	url: "/mode/:mode",
 	handler: (request: any, response) => {
-		
+		setMode(parseInt(request.params.mode));
+		response.send({ok: true});
 	}
 }, {
 	method: Method.PUT,
