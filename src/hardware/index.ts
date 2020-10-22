@@ -103,6 +103,7 @@ export function setMode(mode: Mode) {
 
 	// Set mode.
 	state.mode = mode;
+	logger.info(`Changed mode to ${Mode[mode]}.`);
 }
 
 /**
