@@ -2,7 +2,7 @@
 import { Gpio } from "pigpio";
 
 // Modules
-const logger = require("../utils/logger")("hw");
+const logger = require("../utils/logger")("hardware");
 import config from "../config.default.json";
 import { getNextColour } from "./sweep";
 
@@ -61,6 +61,13 @@ async function start() {
 
 /**
  * 
+ */
+export function getColour() : Colour {
+	return state.colour ? state.colour : defaultColour;
+}
+
+/**
+ * 
  * @param colour 
  */
 export function setColour(colour: Colour) {
@@ -74,6 +81,13 @@ export function setColour(colour: Colour) {
 	state.power = true;
 	state.mode = Mode.COLOUR;
 	state.colour = colour;
+}
+
+/**
+ * 
+ */
+export function getPower() : Boolean {
+	return state.power;
 }
 
 /**
@@ -92,6 +106,13 @@ export function setPower(newPower: Boolean) {
 	if (state.power) {
 		// ...
 	}
+}
+
+/**
+ * 
+ */
+export function getMode() : Mode {
+	return state.mode;
 }
 
 export function setMode(mode: Mode) {
