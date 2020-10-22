@@ -33,6 +33,11 @@ export interface Colour {
 	green: number
 };
 
+export interface Notification {
+	colour: Colour,
+	time: number
+};
+
 // Constants
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
 const interpolationFactor = (1 / config.hardware.framerate) * config.hardware.interpolation;
@@ -47,6 +52,9 @@ let state : HardwareState = {
 	colour: defaultColour,
 	previousColour: { red: 0, green: 0, blue: 0 }
 };
+
+// Flash notifcations
+let notifications : Array<Notification> = [];
 
 /**
  * 
@@ -166,32 +174,42 @@ function loop() {
 		return;
 	}
 
-	// Change behaviour depending on mode.
-	switch (state.mode) {
-		case Mode.NONE: {
-			// Turn off lights.
-			writeColour({red: 0, green: 0, blue: 0});
-			break;
-		}
-		case Mode.COLOUR: {
-			// Set default colour if colour is not set.
-			if (!state.colour) state.colour = defaultColour;
-			writeColour(state.colour);
-			break;
-		}
-		case Mode.SWEEP: {
-			state.colour = getNextSweepColour();
-			break;
-		}
-		case Mode.REACTIVE: {
-			// Flash until we're connected to the server in reactive mode.
-			if (!isConnected()) {
-				state.colour = getNextFadeColour();
+	// Notifications take priority on the current colour.
+	if (notifications.length > 0) {
+		state.colour = notifications[0].colour;
+		notifications[0].time -= 1 / config.hardware.framerate
+
+		// Remove notification when expired.
+		if (notifications[0].time <= 0)
+			notifications.splice(0, 1);
+	} else {
+		// Change behaviour depending on mode.
+		switch (state.mode) {
+			case Mode.NONE: {
+				// Turn off lights.
+				state.colour = {red: 0, green: 0, blue: 0};
 				break;
-			} else {
-				state.colour = getNextReactiveColour();
 			}
-			break;
+			case Mode.COLOUR: {
+				// Set default colour if colour is not set.
+				if (!state.colour) state.colour = defaultColour;
+				state.colour = state.colour;
+				break;
+			}
+			case Mode.SWEEP: {
+				state.colour = getNextSweepColour();
+				break;
+			}
+			case Mode.REACTIVE: {
+				// Flash until we're connected to the server in reactive mode.
+				if (!isConnected()) {
+					state.colour = getNextFadeColour();
+					break;
+				} else {
+					state.colour = getNextReactiveColour();
+				}
+				break;
+			}
 		}
 	}
 
@@ -206,6 +224,10 @@ function loop() {
 	
 	// Schedule loop.
 	loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
+}
+
+export function pushNotification(notification: Notification) {
+	notifications.push(notification);
 }
 
 export default {

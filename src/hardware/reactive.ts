@@ -1,6 +1,6 @@
 // Imports
 import { client as WebSocketClient, connection as WebSocketConnection } from "websocket";
-import { Colour } from ".";
+import { Colour, pushNotification } from ".";
 
 // Modules
 const logger = require("../utils/logger")("reactive");
@@ -16,8 +16,12 @@ var colour : Colour = {red: 0, green: 0, blue: 0}
 
 // Event handlers
 function onConnect(connection: WebSocketConnection) {
+	// Set connection flag.
 	logger.success(`Successfully connected to Ether server ${host}:${port}.`);
 	connected = true;
+	
+	// Notify about the connection.
+	pushNotification({ colour: { red: 0, green: 255, blue: 0 }, time: 1});
 
 	// Add event handlers.
 	connection.on("error", (error: any) => onError(error));
@@ -34,6 +38,9 @@ function onClose() {
 	logger.info(`Connection to Ether server ${host}:${port} closed.`);
 	client = new WebSocketClient();
 	connected = false;
+
+	// Notify about the disconnection.
+	pushNotification({ colour: { red: 255, green: 0, blue: 0 }, time: 1});
 }
 
 function onMessage(message: any) {
