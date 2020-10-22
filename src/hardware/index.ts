@@ -36,7 +36,7 @@ export interface Colour {
 // Constants
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
 const interpolationFactor = (1 / config.hardware.framerate) * config.hardware.interpolation;
-console.log(interpolationFactor);
+
 // LEDs
 var loopTimeout: NodeJS.Timeout;
 var red: Gpio, green: Gpio, blue: Gpio;
@@ -197,12 +197,10 @@ function loop() {
 
 	// Interpolate colours.
 	state.previousColour = {
-		red: lerp(state.previousColour.red, state.colour.red, interpolationFactor),
-		green: lerp(state.previousColour.green, state.colour.green, interpolationFactor),
-		blue: lerp(state.previousColour.blue, state.colour.blue, interpolationFactor)
+		red: Math.floor(lerp(state.previousColour.red, state.colour.red, interpolationFactor)),
+		green: Math.floor(lerp(state.previousColour.green, state.colour.green, interpolationFactor)),
+		blue: Math.floor(lerp(state.previousColour.blue, state.colour.blue, interpolationFactor))
 	};
-
-	console.log(state.previousColour);
 
 	writeColour(state.previousColour);
 	
