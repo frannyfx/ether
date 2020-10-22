@@ -9,9 +9,9 @@
 	},
 	"hardware": {
 		"pins": {
-			"red": 11,
-			"green": 15,
-			"blue": 18
+			"red": 17,
+			"green": 22,
+			"blue": 24
 		},
 		"framerate": 60
 	}
