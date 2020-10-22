@@ -35,7 +35,7 @@ export interface Colour {
 
 // Constants
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
-const interpolationFactor = (1000 / config.hardware.framerate) * config.hardware.interpolation;
+const interpolationFactor = (1 / config.hardware.framerate) * config.hardware.interpolation;
 
 // LEDs
 var loopTimeout: NodeJS.Timeout;
