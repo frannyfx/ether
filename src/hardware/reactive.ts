@@ -21,7 +21,7 @@ function onConnect(connection: WebSocketConnection) {
 	connected = true;
 	
 	// Notify about the connection.
-	pushNotification({ colour: { red: 0, green: 0, blue: 255 }, time: 0.4});
+	pushNotification({ colour: { red: 0, green: 255, blue: 106 }, time: 0.4});
 
 	// Add event handlers.
 	connection.on("error", (error: any) => onError(error));
@@ -40,7 +40,7 @@ function onClose() {
 	connected = false;
 
 	// Notify about the disconnection.
-	pushNotification({ colour: { red: 255, green: 0, blue: 0 }, time: 0.4});
+	pushNotification({ colour: { red: 255, green: 0, blue: 72 }, time: 0.4});
 }
 
 function onMessage(message: any) {
@@ -61,7 +61,7 @@ function onConnectFailed(error : any) {
 	client = new WebSocketClient();
 
 	// Notify about failure to connect.
-	pushNotification({ colour: { red: 255, green: 0, blue: 0 }, time: 0.4});
+	pushNotification({ colour: { red: 255, green: 0, blue: 72 }, time: 0.4});
 }
 
 export function getHost() : string {
