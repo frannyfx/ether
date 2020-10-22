@@ -132,8 +132,6 @@ function loop() {
 		return;
 	}
 
-	console.log("Looping");
-
 	// Change behaviour depending on mode.
 	switch (state.mode) {
 		case Mode.NONE: {
