@@ -22,9 +22,11 @@
     "webpack-cli": "^4.1.0"
   },
   "dependencies": {
+    "@types/websocket": "^1.0.1",
     "chalk": "^4.1.0",
     "fastify": "^3.7.0",
     "fastify-static": "^3.3.0",
-    "pigpio": "^3.2.4"
+    "pigpio": "^3.2.4",
+    "websocket": "^1.0.32"
   }
 }

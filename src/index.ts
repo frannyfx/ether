@@ -21,5 +21,6 @@ process.on("unhandledRejection", err => {
 // Handle stopping.
 process.on("SIGINT", async () => {
 	await server.stop();
+	hardware.stop();
 	process.exit();
 });

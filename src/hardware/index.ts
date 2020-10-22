@@ -4,7 +4,11 @@ import { Gpio } from "pigpio";
 // Modules
 const logger = require("../utils/logger")("hardware");
 import config from "../config.default.json";
-import { getNextColour } from "./sweep";
+
+// Modes
+import { getNextColour as getNextFadeColour } from "./fade";
+import { isConnected, getNextColour as getNextReactiveColour } from "./reactive";
+import { getNextColour as getNextSweepColour} from "./sweep";
 
 // Enums
 export enum Mode {
@@ -31,6 +35,7 @@ export interface Colour {
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
 
 // LEDs
+var loopTimeout: NodeJS.Timeout;
 var red: Gpio, green: Gpio, blue: Gpio;
 let state : HardwareState = {
 	initialised: false,
@@ -140,8 +145,9 @@ function writeColour(colour: Colour) {
 /**
  * 
  */
-async function stop() {
-	
+function stop() {
+	clearTimeout(loopTimeout);
+	logger.info("Stopped LEDs.")
 }
 
 /**
@@ -150,7 +156,7 @@ async function stop() {
 function loop() {
 	// Check power.
 	if (!state.power) {
-		setTimeout(() => loop(), 1000 / config.hardware.framerate);
+		loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
 		return;
 	}
 
@@ -168,16 +174,22 @@ function loop() {
 			break;
 		}
 		case Mode.SWEEP: {
-			writeColour(getNextColour());
+			writeColour(getNextSweepColour());
 			break;
 		}
 		case Mode.REACTIVE: {
-			// ...
+			// Flash until we're connected to the server in reactive mode.
+			if (!isConnected()) {
+				writeColour(getNextFadeColour());
+				break;
+			} else {
+				
+			}
 			break;
 		}
 	}
 	
-	setTimeout(() => loop(), 1000 / config.hardware.framerate);
+	loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
 }
 
 export default {

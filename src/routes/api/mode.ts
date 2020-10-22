@@ -4,7 +4,7 @@ import { getMode, setMode } from "../../hardware"
 const route : Array<Route> = [{
 	method: Method.GET,
 	url: "/api/mode/",
-	handler: (request: any, response) => {
+	handler: (_, response) => {
 		response.send({ok: true, result: { mode: getMode() }});
 	}
 }, {

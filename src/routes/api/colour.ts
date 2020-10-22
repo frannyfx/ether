@@ -4,7 +4,7 @@ import { setColour, getColour } from "../../hardware"
 const route : Array<Route> = [{
 	method: Method.GET,
 	url: "/api/colour",
-	handler: (request: any, response) => {
+	handler: (_, response) => {
 		response.send({ok: true, result: { colour: getColour() }});
 	}
 }, {
