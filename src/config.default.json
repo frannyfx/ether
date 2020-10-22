@@ -1,0 +1,18 @@
+{
+	"server": {
+		"port": 8080,
+		"address": "0.0.0.0",
+		"dirs": {
+			"routes": "routes",
+			"public": "public"
+		}
+	},
+	"hardware": {
+		"pins": {
+			"red": 11,
+			"green": 15,
+			"blue": 18
+		},
+		"framerate": 60
+	}
+}
