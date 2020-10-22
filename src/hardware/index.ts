@@ -4,6 +4,7 @@ import { Gpio } from "pigpio";
 // Modules
 const logger = require("../utils/logger")("hardware");
 import config from "../config.default.json";
+import { lerp } from "../utils/general";
 
 // Modes
 import { getNextColour as getNextFadeColour } from "./fade";
@@ -22,7 +23,8 @@ export interface HardwareState {
 	initialised: Boolean,
 	power: Boolean,
 	mode: Mode,
-	colour?: Colour
+	colour: Colour,
+	previousColour: Colour
 };
 
 export interface Colour {
@@ -33,6 +35,7 @@ export interface Colour {
 
 // Constants
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
+const interpolationFactor = (1000 / config.hardware.framerate) * config.hardware.interpolation;
 
 // LEDs
 var loopTimeout: NodeJS.Timeout;
@@ -40,7 +43,9 @@ var red: Gpio, green: Gpio, blue: Gpio;
 let state : HardwareState = {
 	initialised: false,
 	power: false,
-	mode: Mode.NONE
+	mode: Mode.NONE,
+	colour: defaultColour,
+	previousColour: { red: 0, green: 0, blue: 0 }
 };
 
 /**
@@ -156,6 +161,7 @@ function stop() {
 function loop() {
 	// Check power.
 	if (!state.power) {
+		writeColour({red: 0, green: 0, blue: 0});
 		loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
 		return;
 	}
@@ -174,21 +180,31 @@ function loop() {
 			break;
 		}
 		case Mode.SWEEP: {
-			writeColour(getNextSweepColour());
+			state.colour = getNextSweepColour();
 			break;
 		}
 		case Mode.REACTIVE: {
 			// Flash until we're connected to the server in reactive mode.
 			if (!isConnected()) {
-				writeColour(getNextFadeColour());
+				state.colour = getNextFadeColour();
 				break;
 			} else {
-				writeColour(getNextReactiveColour());
+				state.colour = getNextReactiveColour();
 			}
 			break;
 		}
 	}
+
+	// Interpolate colours.
+	state.previousColour = {
+		red: lerp(state.previousColour.red, state.colour.red, interpolationFactor),
+		green: lerp(state.previousColour.green, state.colour.green, interpolationFactor),
+		blue: lerp(state.previousColour.blue, state.colour.blue, interpolationFactor)
+	};
+
+	writeColour(state.previousColour);
 	
+	// Schedule loop.
 	loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
 }
 

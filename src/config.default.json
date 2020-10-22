@@ -23,6 +23,7 @@
 			"fade": {
 				"step": 10
 			}
-		}
+		},
+		"interpolation": 25
 	}
 }

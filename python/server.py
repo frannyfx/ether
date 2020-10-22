@@ -21,8 +21,8 @@ FRAMERATE = 60
 FREQUENCY_BUCKET_SIZE = (RATE / 2) / (CHUNK_SIZE / 2)
 
 ## Colours
-INTERPOLATION_SPEED = 25.0
-INTERPOLATION_FACTOR = (1.0 / FRAMERATE) * INTERPOLATION_SPEED
+#INTERPOLATION_SPEED = 25.0
+#INTERPOLATION_FACTOR = (1.0 / FRAMERATE) * INTERPOLATION_SPEED
 
 ## Streaming
 INTERFACE = "0.0.0.0"
@@ -34,7 +34,7 @@ audio = pyaudio.PyAudio()
 
 ## Analysis
 red = green = blue = 0
-previous_red = previous_green = previous_blue = 0
+#previous_red = previous_green = previous_blue = 0
 
 ## Streaming
 server = None
@@ -88,15 +88,16 @@ async def loop():
 	global last_frame, previous_red, previous_green, previous_blue
 	while True:
 		# Interpolate colours
-		previous_red = int(lerp(previous_red, red, INTERPOLATION_FACTOR))
-		previous_green = int(lerp(previous_green, green, INTERPOLATION_FACTOR))
-		previous_blue = int(lerp(previous_blue, blue, INTERPOLATION_FACTOR))
+		#previous_red = int(lerp(previous_red, red, INTERPOLATION_FACTOR))
+		#previous_green = int(lerp(previous_green, green, INTERPOLATION_FACTOR))
+		#previous_blue = int(lerp(previous_blue, blue, INTERPOLATION_FACTOR))
 
 		await asyncio.sleep(1 / FRAMERATE)
 		if (time.time_ns() - last_frame) / (10**6) > 1000 / FRAMERATE:
 			for websocket in clients:
 				try:
-					await websocket.send(f"{previous_red},{previous_green},{previous_blue}")
+					#await websocket.send(f"{previous_red},{previous_green},{previous_blue}")
+					await websocket.send(f"{red},{green},{blue}")
 				except Exception as e:
 					pass
 
