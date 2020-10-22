@@ -85,6 +85,7 @@ function registerRoute(fastify: any, route: Route) {
 			route.handler(request, response);
 		} catch (e) {
 			logger.error(`Unhandled error at route ${Method[route.method]} '${route.url}' - ${e.message}`);
+			response.send({ok: false});
 		}
 	});
 
