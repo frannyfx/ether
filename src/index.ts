@@ -1,6 +1,10 @@
 // Modules
 const logger = require("./utils/logger")("main");
 import server from "./server";
+import hardware from "./hardware";
+
+// Start modules.
+hardware.start();
 server.start();
 
 // Catch uncaught exceptions

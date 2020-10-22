@@ -29,6 +29,6 @@ async function loop() {
 	setTimeout(() => loop(), 1000 / config.hardware.framerate);
 }
 
-export {
+export default {
 	start, stop, setColour
 };
