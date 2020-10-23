@@ -1,5 +1,7 @@
 <template>
-	<div class="background" :style="{backgroundImage: `url('${chosenImage}')`}" @click="next"></div>
+	<div class="background" :class="{ off: !$store.state.hardwareState.power }" @click="next">
+		<div class="background-image" :style="{backgroundImage: `url('${chosenImage}')`}"></div>
+	</div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -37,10 +39,26 @@ export default Vue.extend({
 .background {
 	width: 100%;
 	height: 100%;
-	background-size: cover;
-	background-position: center;
 	position: absolute;
 	top: 0; left: 0; right: 0; bottom: 0;
+	background-color: white;
 	cursor: pointer;
+	transition: transform 0.5s;
+
+	.background-image {
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		transition: opacity 0.5s;
+	}
+
+	&.off {
+		transform: scaleY(0);
+
+		.background-image {
+			opacity: 0;
+		}
+	}
 }
 </style>

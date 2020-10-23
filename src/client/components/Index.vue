@@ -26,6 +26,9 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	width: 100vw;
 	height: 100vh;
+	background-image: url('https://media.giphy.com/media/3o7qE2KFaCY1xVIqu4/source.gif');
+	background-size: cover;
+	background-position: center;
 
 	.container {
 		width: 100%;
