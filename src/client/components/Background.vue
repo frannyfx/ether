@@ -20,6 +20,8 @@ export default Vue.extend({
 				"https://media.giphy.com/media/3o7aD9y2CKtGHRfhOE/source.gif",
 				"https://media.giphy.com/media/ijhLl5UuE7yec/source.gif",
 				"https://media.giphy.com/media/Wm9XlKG2xIMiVcH4CP/source.gif",
+				"https://media.giphy.com/media/Qx6GzMwOdGx9e/source.gif",
+				"https://media.giphy.com/media/VIzmAi5KS3RyRhY9Sq/source.gif"
 			]
 		};
 	},
