@@ -109,6 +109,8 @@ export default Vue.extend({
 	color: white;
 	backdrop-filter: blur(10px) saturate(150%);
 	-webkit-backdrop-filter: blur(10px) saturate(150%);
+	-moz-backdrop-filter: blur(10px) saturate(150%);
+	backdrop-filter: blur(10px) saturate(150%);
 	box-shadow: inset 0px 1px 0px rgba(white, 0.2), 0px 22px 70px 4px rgba(black, 0.56), 0px 0px 0px 1px rgba(black, 0.1);
 
 	display: flex;
