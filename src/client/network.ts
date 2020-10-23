@@ -30,7 +30,7 @@ export interface HardwareState {
 };
 
 // Variables
-var refreshCallback;
+var refreshCallback : Function;
 
 export async function initialise() {
 	// Refresh state data.
