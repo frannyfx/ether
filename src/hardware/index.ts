@@ -80,6 +80,13 @@ async function start() {
 /**
  * 
  */
+export function getState() : HardwareState {
+	return state;
+}
+
+/**
+ * 
+ */
 export function getColour() : Colour {
 	return state.colour ? state.colour : defaultColour;
 }
@@ -89,12 +96,6 @@ export function getColour() : Colour {
  * @param colour 
  */
 export function setColour(colour: Colour) {
-	// Prevent setting invalid state if the LEDs are not initialised.
-	if (!state.initialised) {
-		logger.warn("Could not set colour as GPIO is not initialised.");
-		return;
-	}
-
 	// Update state.
 	state.power = true;
 	state.mode = Mode.COLOUR;
@@ -113,12 +114,6 @@ export function getPower() : Boolean {
  * @param newPower 
  */
 export function setPower(newPower: Boolean) {
-	// Prevent setting invalid state if the LEDs are not initialised.
-	if (!state.initialised) {
-		logger.warn("Could not change power state as GPIO is not initialised.");
-		return;
-	}
-
 	// Update state.
 	state.power = newPower;
 	if (state.power) {
@@ -134,12 +129,6 @@ export function getMode() : Mode {
 }
 
 export function setMode(mode: Mode) {
-	// Prevent setting invalid state if the LEDs are not initialised.
-	if (!state.initialised) {
-		logger.warn("Could not set mode as GPIO is not initialised.");
-		return;
-	}
-
 	// Set mode.
 	state.mode = mode;
 	logger.info(`Changed mode to ${Mode[mode]}.`);

@@ -7,6 +7,7 @@ const logger = require("../utils/logger")("reactive");
 
 // Variables
 var client = new WebSocketClient();
+var connection : WebSocketConnection;
 var connected = false;
 var host = "";
 var port =  -1;
@@ -15,10 +16,11 @@ var port =  -1;
 var colour : Colour = {red: 0, green: 0, blue: 0}
 
 // Event handlers
-function onConnect(connection: WebSocketConnection) {
+function onConnect(conn: WebSocketConnection) {
 	// Set connection flag.
 	logger.success(`Successfully connected to Ether server ${host}:${port}.`);
 	connected = true;
+	connection = conn;
 	
 	// Notify about the connection.
 	pushNotification({ colour: { red: 0, green: 255, blue: 106 }, time: 0.4});
@@ -71,6 +73,12 @@ export function getHost() : string {
 export function setHost(newHost: string, newPort: number) {
 	host = newHost;
 	port = newPort;
+
+	// Close pre-existing connection if connected.
+	if (connected) {
+		connection.close();
+		client = new WebSocketClient();
+	}
 
 	// Attempt to connect.
 	connect();

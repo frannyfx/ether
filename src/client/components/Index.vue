@@ -1,14 +1,36 @@
 <template>
-	<div>
-		<h1>Ether</h1>
+	<div class="container">
+		<background/>
+		<panel/>
 	</div>
 </template>
+<script lang="ts">
+import Vue from "vue"
+import Background from "./Background.vue";
+import Panel from "./Panel.vue";
+
+// Modules
+import { initialise as initialiseNetwork } from "../network";
+
+export default Vue.extend({
+	components: { Background, Panel },
+	mounted() {
+		initialiseNetwork();
+	}
+})
+</script>
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 body {
 	margin: 0; padding: 0;
 	top: 0; bottom: 0; left: 0; right: 0;
-	font-family: 'Roboto', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	width: 100vw;
+	height: 100vh;
+
+	.container {
+		width: 100%;
+		height: 100%;
+	}
 }
 
 h1 {
