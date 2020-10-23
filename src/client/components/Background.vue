@@ -11,11 +11,15 @@ export default Vue.extend({
 			chosenImage: "",
 			imageIndex: 0,
 			images: [
-				"https://media.giphy.com/media/l0O9x56kSTBPXyH1m/source.gif",
+				/*"https://media.giphy.com/media/l0O9x56kSTBPXyH1m/source.gif",
 				"https://media.giphy.com/media/3oFyCZm9jPjlzsAwXS/source.gif",
 				"https://media.giphy.com/media/l44Qqq69E0gTyqLwk/source.gif",
 				"https://media.giphy.com/media/l3vRdcQgmyYnUYFna/source.gif",
-				"https://media.giphy.com/media/3o6fIYWU6HVdxrqmBO/source.gif"
+				"https://media.giphy.com/media/3o6fIYWU6HVdxrqmBO/source.gif"*/
+				"https://media.giphy.com/media/1lBjtSx9NE3tzEPJsS/giphy.gif",
+				"https://media.giphy.com/media/3o7aD9y2CKtGHRfhOE/source.gif",
+				"https://media.giphy.com/media/ijhLl5UuE7yec/source.gif",
+				"https://media.giphy.com/media/Wm9XlKG2xIMiVcH4CP/source.gif",
 			]
 		};
 	},
@@ -30,8 +34,7 @@ export default Vue.extend({
 		}
 	},
 	mounted() {
-		this.chosenImage = this.images[this.imageIndex];
-		//this.randomise();
+		this.randomise();
 	}
 })
 </script>
