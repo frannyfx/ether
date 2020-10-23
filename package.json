@@ -6,6 +6,7 @@
   "scripts": {
     "start": "tsc && rm -rf dist/public && cp -Rf src/public dist/public && webpack && node dist/index.js",
     "pi-start": "tsc && rm -rf dist/public && cp -Rf src/public dist/public && webpack && sudo node dist/index.js",
+    "build": "tsc && rm -rf dist/public && cp -Rf src/public dist/public && webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Francesco Compagnoni",
