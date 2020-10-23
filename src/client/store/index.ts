@@ -10,6 +10,7 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== "production";
 export default new Vuex.Store({
 	state: {
+		receivedState: false,
 		hardwareState: {
 			initialised: false,
 			power: false,
@@ -19,6 +20,7 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		setHardwareState (state, hardwareState: HardwareState) {
+			state.receivedState = true;
 			state.hardwareState.initialised = hardwareState.initialised;
 			state.hardwareState.power = hardwareState.power;
 			state.hardwareState.mode = hardwareState.mode;

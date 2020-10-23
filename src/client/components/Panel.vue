@@ -38,7 +38,7 @@
 					<input v-model="reactiveHost" type="text" placeholder="Ether server">
 					<div @click="connect" class="simple-button">Connect</div>
 				</div>
-				<div class="page" v-show="!$store.state.hardwareState.initialised" :key="-1">
+				<div class="page" v-show="!$store.state.hardwareState.initialised && $store.state.receivedState" :key="-1">
 					<p>LED initialisation failed.</p>
 				</div>
 			</transition-group>
