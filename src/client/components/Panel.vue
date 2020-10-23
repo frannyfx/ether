@@ -1,6 +1,6 @@
 <template>
 	<div class="panel-container">
-		<div class="panel">
+		<div class="panel" :class="{ initialised: $store.state.receivedState }">
 			<div class="title-bar">
 				<div class="buttons">
 					<div @click="turnOff" class="title-button"></div>
@@ -112,6 +112,15 @@ export default Vue.extend({
 	-moz-backdrop-filter: blur(10px) saturate(150%);
 	backdrop-filter: blur(10px) saturate(150%);
 	box-shadow: inset 0px 1px 0px rgba(white, 0.2), 0px 22px 70px 4px rgba(black, 0.56), 0px 0px 0px 1px rgba(black, 0.1);
+	transition: transform 1s;
+
+	&:not(.initialised) {
+		transform: scale(0);
+
+		.page-container {
+			opacity: 0;
+		}
+	}
 
 	display: flex;
 	flex-direction: column;
@@ -202,6 +211,7 @@ export default Vue.extend({
 	margin: 5px;
 	margin-top: 0px;
 	border-radius: 10px;
+	transition: opacity 0.5s 0.3s;
 
 	.page {
 		position: absolute;
