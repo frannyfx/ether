@@ -15,7 +15,7 @@
 			</div>
 			<transition-group name="slide" tag="div" class="page-container">
 				<div class="page" v-show="($store.state.hardwareState.mode == Mode.NONE || !$store.state.hardwareState.power) && $store.state.hardwareState.initialised" :key="Mode.NONE">
-					<div v-if="!$store.state.hardwareState.power" @click="turnOn" class="simple-button">Power on</div>
+					<div @click="turnOn" class="simple-button">Power on</div>
 				</div>
 				<div class="page colour-page" v-show="$store.state.hardwareState.mode == Mode.COLOUR && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.COLOUR">
 					<div class="slider">
