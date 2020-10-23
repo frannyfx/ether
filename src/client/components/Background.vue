@@ -47,6 +47,7 @@ export default Vue.extend({
 	background-color: white;
 	cursor: pointer;
 	transition: transform 0.5s;
+	opacity: 0.8;
 
 	.background-image {
 		width: 100%;
