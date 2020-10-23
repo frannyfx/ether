@@ -20,15 +20,15 @@
 				<div class="page colour-page" v-show="$store.state.hardwareState.mode == Mode.COLOUR && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.COLOUR">
 					<div class="slider">
 						<span>Red</span>
-						<input v-model="red" @change="onColourChange" type="range" ontype="range" min="0" max="255" value="255" class="colour-slider">
+						<input v-model="red" @change="onColourChange" type="range" ontype="range" min="0" max="255" :value="$store.state.hardwareState.colour.red" class="colour-slider">
 					</div>
 					<div class="slider">
 						<span>Green</span>
-						<input v-model="green" @change="onColourChange" type="range" min="0" max="255" value="255" class="colour-slider">
+						<input v-model="green" @change="onColourChange" type="range" min="0" max="255" :value="$store.state.hardwareState.colour.green" class="colour-slider">
 					</div>
 					<div class="slider">
 						<span>Blue</span>
-						<input v-model="blue" @change="onColourChange" type="range" min="0" max="255" value="255" class="colour-slider">
+						<input v-model="blue" @change="onColourChange" type="range" min="0" max="255" :value="$store.state.hardwareState.colour.blue" class="colour-slider">
 					</div>
 				</div>
 				<div class="page sweep-page" v-show="$store.state.hardwareState.mode == Mode.SWEEP && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.SWEEP">
