@@ -29,12 +29,19 @@ export interface HardwareState {
 	colour: Colour,
 };
 
+// Variables
+var refreshCallback;
+
 export async function initialise() {
 	// Refresh state data.
 	refresh();
 }
 
-async function refresh() {
+export function setRefreshCallback(cb : Function) {
+	refreshCallback = cb;
+}
+
+export async function refresh() {
 	// Get state.
 	let stateResponse = await request(Method.GET, "/state");
 
@@ -43,6 +50,7 @@ async function refresh() {
 		delete stateResponse.result.state.previousColour;
 		store.commit("setHardwareState", stateResponse.result.state);
 		console.log(stateResponse.result.state.mode);
+		refreshCallback();
 	}
 }
 
