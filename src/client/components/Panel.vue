@@ -2,11 +2,11 @@
 	<div class="panel-container">
 		<div class="panel">
 			<div class="title-bar">
-				<!--<div class="buttons">
+				<div class="buttons">
+					<div @click="turnOff" class="title-button"></div>
 					<div class="title-button"></div>
 					<div class="title-button"></div>
-					<div class="title-button"></div>
-				</div>-->
+				</div>
 				<div class="categories">
 					<span class="button" @click="() => setMode(Mode.COLOUR)" :class="{'selected': $store.state.hardwareState.mode == Mode.COLOUR}">Colour</span>
 					<span class="button" @click="() => setMode(Mode.SWEEP)" :class="{'selected': $store.state.hardwareState.mode == Mode.SWEEP}">Sweep</span>
@@ -14,7 +14,10 @@
 				</div>
 			</div>
 			<transition-group name="slide" tag="div" class="page-container">
-				<div class="page colour-page" v-show="$store.state.hardwareState.mode == Mode.COLOUR" :key="Mode.COLOUR">
+				<div class="page" v-show="($store.state.hardwareState.mode == Mode.NONE || !$store.state.hardwareState.power) && $store.state.hardwareState.initialised" :key="Mode.NONE">
+					<div v-if="!$store.state.hardwareState.power" @click="turnOn" class="simple-button">Power on</div>
+				</div>
+				<div class="page colour-page" v-show="$store.state.hardwareState.mode == Mode.COLOUR && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.COLOUR">
 					<div class="slider">
 						<span>Red</span>
 						<input v-model="red" @change="onColourChange" type="range" ontype="range" min="0" max="255" value="255" class="colour-slider">
@@ -28,12 +31,15 @@
 						<input v-model="blue" @change="onColourChange" type="range" min="0" max="255" value="255" class="colour-slider">
 					</div>
 				</div>
-				<div class="page sweep-page" v-show="$store.state.hardwareState.mode == Mode.SWEEP" :key="Mode.SWEEP">
+				<div class="page sweep-page" v-show="$store.state.hardwareState.mode == Mode.SWEEP && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.SWEEP">
 					<p>No controls available.</p>
 				</div>
-				<div class="page reactive-page" v-show="$store.state.hardwareState.mode == Mode.REACTIVE" :key="Mode.REACTIVE">
+				<div class="page reactive-page" v-show="$store.state.hardwareState.mode == Mode.REACTIVE && $store.state.hardwareState.power && $store.state.hardwareState.initialised" :key="Mode.REACTIVE">
 					<input v-model="reactiveHost" type="text" placeholder="Ether server">
 					<div @click="connect" class="simple-button">Connect</div>
+				</div>
+				<div class="page" v-show="!$store.state.hardwareState.initialised" :key="-1">
+					<p>LED initialisation failed.</p>
 				</div>
 			</transition-group>
 		</div>
@@ -41,7 +47,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { Mode, setColour, setMode, setReactiveHost } from "../network";
+import { Mode, setColour, setMode, setPower, setReactiveHost } from "../network";
 
 export default Vue.extend({
 	data() {
@@ -63,9 +69,16 @@ export default Vue.extend({
 		connect() {
 			console.log(this.reactiveHost);
 			setReactiveHost(this.reactiveHost);
+		},
+		async turnOn() {
+			await setPower(true);
+		},
+		turnOff() {
+			setPower(false);
 		}
 	},
 	mounted() {
+
 	}
 });
 </script>
@@ -170,6 +183,7 @@ export default Vue.extend({
 	width: 12px;
 	height: 12px;
 	border-radius: 8px;
+	cursor: pointer;
 }
 
 .page-container {

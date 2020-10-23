@@ -100,6 +100,7 @@ export function setColour(colour: Colour) {
 	state.power = true;
 	state.mode = Mode.COLOUR;
 	state.colour = colour;
+	logger.info(`Changed colour to {${colour.red}, ${colour.green}, ${colour.blue}}.`);
 }
 
 /**
@@ -116,9 +117,7 @@ export function getPower() : Boolean {
 export function setPower(newPower: Boolean) {
 	// Update state.
 	state.power = newPower;
-	if (state.power) {
-		// ...
-	}
+	logger.info(`Changed power state to ${newPower ? "on" : "off"}.`)
 }
 
 /**
