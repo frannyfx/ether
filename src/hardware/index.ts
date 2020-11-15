@@ -41,6 +41,7 @@ export interface Notification {
 // Constants
 const defaultColour: Colour = { red: 255, green: 0, blue: 255 };
 const interpolationFactor = (1 / config.hardware.framerate) * config.hardware.interpolation;
+const slowInterpolationFactor = (1 / config.hardware.framerate);
 
 // LEDs
 var loopTimeout: NodeJS.Timeout;
@@ -204,7 +205,7 @@ function loop() {
 	}
 
 	// Calculate delta.
-	let delta = transitionTime > 0 ? (config.hardware.transitionLength - transitionTime) / config.hardware.transitionLength : interpolationFactor;
+	let delta = transitionTime > 0 ? (config.hardware.transitionLength - transitionTime) / config.hardware.transitionLength : state.mode == Mode.COLOUR ? slowInterpolationFactor : interpolationFactor;
 	transitionTime -= 1 / config.hardware.framerate;
 
 	// Interpolate colours.
