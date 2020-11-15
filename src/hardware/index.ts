@@ -45,6 +45,7 @@ const interpolationFactor = (1 / config.hardware.framerate) * config.hardware.in
 // LEDs
 var loopTimeout: NodeJS.Timeout;
 var red: Gpio, green: Gpio, blue: Gpio;
+let transitionTime = 0;
 let state : HardwareState = {
 	initialised: false,
 	power: false,
@@ -130,6 +131,7 @@ export function getMode() : Mode {
 export function setMode(mode: Mode) {
 	// Set mode.
 	state.mode = mode;
+	transitionTime = config.hardware.transitionLength;
 	logger.info(`Changed mode to ${Mode[mode]}.`);
 }
 
@@ -201,11 +203,15 @@ function loop() {
 		}
 	}
 
+	// Calculate delta.
+	let delta = transitionTime > 0 ? (config.hardware.transitionLength - transitionTime) / config.hardware.transitionLength : interpolationFactor;
+	transitionTime -= 1 / config.hardware.framerate;
+
 	// Interpolate colours.
 	state.previousColour = {
-		red: Math.floor(lerp(state.previousColour.red, state.colour.red, interpolationFactor)),
-		green: Math.floor(lerp(state.previousColour.green, state.colour.green, interpolationFactor)),
-		blue: Math.floor(lerp(state.previousColour.blue, state.colour.blue, interpolationFactor))
+		red: Math.floor(lerp(state.previousColour.red, state.colour.red, delta)),
+		green: Math.floor(lerp(state.previousColour.green, state.colour.green, delta)),
+		blue: Math.floor(lerp(state.previousColour.blue, state.colour.blue, delta))
 	};
 
 	writeColour(state.previousColour);
