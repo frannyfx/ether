@@ -41,8 +41,8 @@ function hslToRgb(h: number, s: number, l: number) : Colour {
     return {red: Math.round(r * 255), green: Math.round(g * 255), blue: Math.round(b * 255)};
 }
 
-export function getNextColour() : Colour {
+export function getNextColour(freeze : Boolean) : Colour {
 	let next = hslToRgb(hue, config.hardware.modes.sweep.saturation, config.hardware.modes.sweep.lightness);
-	hue = (hue + config.hardware.modes.sweep.step) % 1;
+	hue = (hue + (freeze ? 0 : config.hardware.modes.sweep.step)) % 1;
 	return next;
 }
