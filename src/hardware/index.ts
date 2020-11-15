@@ -100,7 +100,7 @@ export function getColour() : Colour {
 export function setColour(colour: Colour) {
 	// Update state.
 	setPower(true);
-	state.mode = Mode.COLOUR;
+	setMode(Mode.COLOUR);
 	state.colour = colour;
 	logger.info(`Changed colour to {${colour.red}, ${colour.green}, ${colour.blue}}.`);
 }
@@ -117,8 +117,11 @@ export function getPower() : Boolean {
  * @param newPower 
  */
 export function setPower(newPower: Boolean) {
+	// Prevent unnecessary transitions from firing.
+	if (state.power == newPower) return;
+	
 	// Update state.
-	if (state.power != newPower) transitionTime = config.hardware.transitionLength;
+	transitionTime = config.hardware.transitionLength;
 	state.power = newPower;
 	logger.info(`Changed power state to ${newPower ? "on" : "off"}.`)
 }
