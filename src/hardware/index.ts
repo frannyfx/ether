@@ -219,12 +219,10 @@ function loop() {
 		blue: lerp(state.previousColour.blue, renderColour.blue, delta)
 	};
 
-	console.log(`Delta = ${delta} - RC = {${renderColour.red}, ${renderColour.green}, ${renderColour.blue}} - PC = {${state.previousColour.red}, ${state.previousColour.green}, ${state.previousColour.blue}}`);
-
 	writeColour({
-		red: Math.floor(state.previousColour.red),
-		green: Math.floor(state.previousColour.green),
-		blue: Math.floor(state.previousColour.blue)
+		red: Math.round(state.previousColour.red),
+		green: Math.round(state.previousColour.green),
+		blue: Math.round(state.previousColour.blue)
 	});
 	
 	// Schedule loop.
