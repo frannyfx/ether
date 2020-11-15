@@ -24,7 +24,7 @@ export interface HardwareState {
 	power: Boolean,
 	mode: Mode,
 	colour: Colour,
-	previousColour: Colour,
+	previousColour: Colour
 };
 
 export interface Colour {
@@ -52,7 +52,7 @@ let state : HardwareState = {
 	power: false,
 	mode: Mode.NONE,
 	colour: defaultColour,
-	previousColour: { red: 0, green: 0, blue: 0 },
+	previousColour: { red: 0, green: 0, blue: 0 }
 };
 
 // Flash notifcations
@@ -132,7 +132,6 @@ export function getMode() : Mode {
 
 export function setMode(mode: Mode) {
 	// Set mode.
-	if (mode != Mode.NONE) setPower(true);
 	state.mode = mode;
 	transitionTime = config.hardware.transitionLength;
 	logger.info(`Changed mode to ${Mode[mode]}.`);
@@ -179,11 +178,11 @@ function loop() {
 			case Mode.COLOUR: {
 				// Set default colour if colour is not set.
 				if (!state.colour) state.colour = defaultColour;
+				state.colour = state.colour;
 				break;
 			}
 			case Mode.SWEEP: {
-				// Freeze the sweep at the beginning to aid the transition.
-				state.colour = getNextSweepColour(transitionTime > 0);
+				state.colour = getNextSweepColour();
 				break;
 			}
 			case Mode.REACTIVE: {
