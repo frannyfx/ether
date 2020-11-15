@@ -209,14 +209,18 @@ function loop() {
 
 	// Interpolate colours.
 	state.previousColour = {
-		red: Math.floor(lerp(state.previousColour.red, renderColour.red, delta)),
-		green: Math.floor(lerp(state.previousColour.green, renderColour.green, delta)),
-		blue: Math.floor(lerp(state.previousColour.blue, renderColour.blue, delta))
+		red: lerp(state.previousColour.red, renderColour.red, delta),
+		green: lerp(state.previousColour.green, renderColour.green, delta),
+		blue: lerp(state.previousColour.blue, renderColour.blue, delta)
 	};
 
 	console.log(`Delta = ${delta} - RC = {${renderColour.red}, ${renderColour.green}, ${renderColour.blue}} - PC = {${state.previousColour.red}, ${state.previousColour.green}, ${state.previousColour.blue}}`);
 
-	writeColour(state.previousColour);
+	writeColour({
+		red: Math.floor(state.previousColour.red),
+		green: Math.floor(state.previousColour.green),
+		blue: Math.floor(state.previousColour.blue)
+	});
 	
 	// Schedule loop.
 	loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
