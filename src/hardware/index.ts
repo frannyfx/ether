@@ -4,7 +4,7 @@ import { Gpio } from "pigpio";
 // Modules
 const logger = require("../utils/logger")("hardware");
 import config from "../config.default.json";
-import { lerp } from "../utils/general";
+import { clamp, lerp } from "../utils/general";
 
 // Modes
 import { getNextColour as getNextFadeColour } from "./fade";
@@ -149,9 +149,9 @@ export function setMode(mode: Mode) {
  * @param colour 
  */
 function writeColour(colour: Colour) {
-	red.pwmWrite(colour.red);
-	green.pwmWrite(colour.green);
-	blue.pwmWrite(colour.blue);
+	red.pwmWrite(clamp(colour.red, 0, 255));
+	green.pwmWrite(clamp(colour.green, 0, 255));
+	blue.pwmWrite(clamp(colour.blue, 0, 255));
 }
 
 /**
