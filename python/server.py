@@ -63,7 +63,6 @@ def analyse(input_data, frame_count, time_info, status):
 	# Get intensity of bass and treble
 	bass = get_intensity(get_buckets(fft_data, 0, 250), 2000000)
 	mid = get_intensity(get_buckets(fft_data, 800, 1800), 1000000)
-	print(mid)
 	treble = get_intensity(get_buckets(fft_data, 10000, 20000), 30000)
 
 	# Calculate colours and clamp them between 0 <= n <= 255
