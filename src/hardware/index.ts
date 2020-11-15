@@ -132,6 +132,7 @@ export function getMode() : Mode {
 
 export function setMode(mode: Mode) {
 	// Set mode.
+	if (mode != Mode.NONE) setPower(true);
 	state.mode = mode;
 	transitionTime = config.hardware.transitionLength;
 	logger.info(`Changed mode to ${Mode[mode]}.`);
@@ -212,6 +213,8 @@ function loop() {
 		green: Math.floor(lerp(state.previousColour.green, renderColour.green, delta)),
 		blue: Math.floor(lerp(state.previousColour.blue, renderColour.blue, delta))
 	};
+
+	console.log(`Delta = ${delta} - TT = ${transitionTime} - RC = ${renderColour} - FINAL = ${state.previousColour}`);
 
 	writeColour(state.previousColour);
 	
