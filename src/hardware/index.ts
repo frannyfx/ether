@@ -118,6 +118,7 @@ export function getPower() : Boolean {
  */
 export function setPower(newPower: Boolean) {
 	// Update state.
+	if (state.power != newPower) transitionTime = config.hardware.transitionLength;
 	state.power = newPower;
 	logger.info(`Changed power state to ${newPower ? "on" : "off"}.`)
 }
