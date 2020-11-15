@@ -149,6 +149,7 @@ export function setMode(mode: Mode) {
  * @param colour 
  */
 function writeColour(colour: Colour) {
+	console.log(colour.red, colour.green, colour.blue);
 	red.pwmWrite(clamp(colour.red, 0, 255));
 	green.pwmWrite(clamp(colour.green, 0, 255));
 	blue.pwmWrite(clamp(colour.blue, 0, 255));
