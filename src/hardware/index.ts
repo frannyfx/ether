@@ -140,7 +140,7 @@ export function setMode(mode: Mode) {
 	if (mode != Mode.NONE) setPower(true);
 	state.mode = mode;
 	transitionTime = config.hardware.transitionLength;
-	logger.info(`Changed mode to ${Mode[mode]}.`);
+	logger.success(`Changed mode to ${Mode[mode]}.`);
 }
 
 /**
@@ -219,6 +219,7 @@ function loop() {
 		blue: lerp(state.previousColour.blue, renderColour.blue, delta)
 	};
 
+	// Write rounded colour to LEDs.
 	writeColour({
 		red: Math.round(state.previousColour.red),
 		green: Math.round(state.previousColour.green),
