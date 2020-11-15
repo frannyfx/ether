@@ -199,9 +199,8 @@ function loop() {
 	}
 
 	// Apply fade-out when turning off and on.
-	if (!state.power) {
-		state.colour = { red: 0, green: 0, blue: 0 };
-	}
+	var renderColour = { red: 0, green: 0, blue: 0 };
+	if (state.power) renderColour = state.colour;
 
 	// Calculate delta.
 	let delta = transitionTime > 0 ? (config.hardware.transitionLength - transitionTime) / config.hardware.transitionLength : state.mode == Mode.COLOUR ? slowInterpolationFactor : interpolationFactor;
@@ -209,9 +208,9 @@ function loop() {
 
 	// Interpolate colours.
 	state.previousColour = {
-		red: Math.floor(lerp(state.previousColour.red, state.colour.red, delta)),
-		green: Math.floor(lerp(state.previousColour.green, state.colour.green, delta)),
-		blue: Math.floor(lerp(state.previousColour.blue, state.colour.blue, delta))
+		red: Math.floor(lerp(state.previousColour.red, renderColour.red, delta)),
+		green: Math.floor(lerp(state.previousColour.green, renderColour.green, delta)),
+		blue: Math.floor(lerp(state.previousColour.blue, renderColour.blue, delta))
 	};
 
 	writeColour(state.previousColour);
