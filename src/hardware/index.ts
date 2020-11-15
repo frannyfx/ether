@@ -182,7 +182,7 @@ function loop() {
 				break;
 			}
 			case Mode.SWEEP: {
-				state.colour = getNextSweepColour();
+				state.colour = getNextSweepColour(transitionTime > 0);
 				break;
 			}
 			case Mode.REACTIVE: {
