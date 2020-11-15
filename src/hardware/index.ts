@@ -204,7 +204,7 @@ function loop() {
 
 	// Calculate delta.
 	let delta = transitionTime > 0 ? (config.hardware.transitionLength - transitionTime) / config.hardware.transitionLength : state.mode == Mode.COLOUR ? slowInterpolationFactor : interpolationFactor;
-	transitionTime -= 1 / config.hardware.framerate;
+	if (transitionTime > 0) transitionTime -= 1 / config.hardware.framerate;
 
 	// Interpolate colours.
 	state.previousColour = {
