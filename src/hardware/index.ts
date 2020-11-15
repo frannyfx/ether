@@ -158,13 +158,6 @@ function stop() {
  * 
  */
 function loop() {
-	// Check power.
-	if (!state.power) {
-		writeColour({red: 0, green: 0, blue: 0});
-		loopTimeout = setTimeout(() => loop(), 1000 / config.hardware.framerate);
-		return;
-	}
-
 	// Notifications take priority on the current colour.
 	if (notifications.length > 0) {
 		state.colour = notifications[0].colour;
@@ -202,6 +195,11 @@ function loop() {
 				break;
 			}
 		}
+	}
+
+	// Apply fade-out when turning off and on.
+	if (!state.power) {
+		state.colour = { red: 0, green: 0, blue: 0 };
 	}
 
 	// Calculate delta.
