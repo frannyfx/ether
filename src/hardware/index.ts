@@ -99,7 +99,7 @@ export function getColour() : Colour {
  */
 export function setColour(colour: Colour) {
 	// Update state.
-	state.power = true;
+	setPower(true);
 	state.mode = Mode.COLOUR;
 	state.colour = colour;
 	logger.info(`Changed colour to {${colour.red}, ${colour.green}, ${colour.blue}}.`);
