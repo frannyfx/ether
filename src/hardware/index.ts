@@ -137,7 +137,7 @@ export function getMode() : Mode {
 
 export function setMode(mode: Mode) {
 	// Set mode.
-	if (mode != mode.NONE) setPower(true);
+	if (mode != Mode.NONE) setPower(true);
 	if (mode == state.mode) return;
 	state.mode = mode;
 	transitionTime = config.hardware.transitionLength;
