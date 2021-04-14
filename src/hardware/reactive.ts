@@ -1,6 +1,7 @@
 // Imports
 import { client as WebSocketClient, connection as WebSocketConnection } from "websocket";
-import { Colour, pushNotification } from ".";
+import { pushNotification } from ".";
+import { Colour } from "../utils/Colour";
 
 // Modules
 const logger = require("../utils/logger")("reactive");

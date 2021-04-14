@@ -4,10 +4,26 @@ import requests
 import subprocess
 import asyncio
 from time import sleep
+import sys
+
+def get_local_ip():
+	try:
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8", 80))
+		localhost = s.getsockname()[0]
+		s.close()
+		return localhost
+	except:
+		return None
 
 # Constants
-LOCALHOST = socket.gethostbyname(socket.gethostname())
-CLIENT = "ethanol.local:8080"
+LOCALHOST = get_local_ip()
+CLIENT = sys.argv[1]
+print(CLIENT)
+
+if LOCALHOST == None:
+	print("Failed to get local IP address.")
+	exit()
 
 os.system("osascript switch-device.scpt")
 requests.put(f"http://{CLIENT}/api/mode/3")

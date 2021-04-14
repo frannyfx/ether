@@ -2,10 +2,12 @@
 const logger = require("./utils/logger")("main");
 import server from "./server";
 import hardware from "./hardware";
+import homekit from "./server/homekit";
 
 // Start modules.
 hardware.start();
 server.start();
+homekit.start();
 
 // Catch uncaught exceptions
 process.on("uncaughtException", err => {

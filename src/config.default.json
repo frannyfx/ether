@@ -26,5 +26,10 @@
 		},
 		"interpolation": 24,
 		"transitionLength": 1.0
+	},
+	"homekit": {
+		"username": "AA:AA:AA:AA:AA:FF",
+		"pincode": "133-33-337",
+		"port": 47129
 	}
 }

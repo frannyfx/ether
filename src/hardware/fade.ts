@@ -1,6 +1,6 @@
 // Modules
 import config from "../config.default.json";
-import { Colour } from "./index";
+import { Colour } from "../utils/Colour";
 
 // Variables
 var brightness = 0;

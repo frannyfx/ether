@@ -5,6 +5,7 @@ import { Gpio } from "pigpio";
 const logger = require("../utils/logger")("hardware");
 import config from "../config.default.json";
 import { clamp, lerp } from "../utils/general";
+import { Colour } from "../utils/Colour";
 
 // Modes
 import { getNextColour as getNextFadeColour } from "./fade";
@@ -20,19 +21,16 @@ export enum Mode {
 };
 
 export interface HardwareState {
-	initialised: Boolean,
-	power: Boolean,
+	initialised: boolean,
+	power: boolean,
 	mode: Mode,
 	colour: Colour,
+	brightness: number,
 	previousColour: Colour,
 	setColour: Colour
 };
 
-export interface Colour {
-	red: number,
-	blue: number,
-	green: number
-};
+
 
 export interface Notification {
 	colour: Colour,
@@ -53,6 +51,7 @@ let state : HardwareState = {
 	power: false,
 	mode: Mode.NONE,
 	colour: defaultColour,
+	brightness: 1,
 	previousColour: { red: 0, green: 0, blue: 0 },
 	setColour: defaultColour
 };
@@ -109,8 +108,18 @@ export function setColour(colour: Colour) {
 
 /**
  * 
+ * @param colour 
  */
-export function getPower() : Boolean {
+export function setBrightness(brightness: number) {
+	// Update state.
+	state.brightness = brightness;
+	logger.info(`Changed brightness to ${Math.round(brightness * 100)}%.`);
+}
+
+/**
+ * 
+ */
+export function getPower() : boolean {
 	return state.power;
 }
 
@@ -118,7 +127,7 @@ export function getPower() : Boolean {
  * 
  * @param newPower 
  */
-export function setPower(newPower: Boolean) {
+export function setPower(newPower: boolean) {
 	// Prevent unnecessary transitions from firing.
 	if (state.power == newPower) return;
 	
@@ -222,9 +231,9 @@ function loop() {
 
 	// Write rounded colour to LEDs.
 	writeColour({
-		red: Math.round(state.previousColour.red),
-		green: Math.round(state.previousColour.green),
-		blue: Math.round(state.previousColour.blue)
+		red: Math.round(state.previousColour.red * state.brightness),
+		green: Math.round(state.previousColour.green * state.brightness),
+		blue: Math.round(state.previousColour.blue * state.brightness)
 	});
 	
 	// Schedule loop.

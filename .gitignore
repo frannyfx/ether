@@ -1,3 +1,7 @@
+# HomeKit
+persist/*
+persist
+
 # General
 .DS_Store
 .AppleDouble
