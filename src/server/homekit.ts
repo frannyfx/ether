@@ -36,7 +36,6 @@ hueCharacteristic.on(CharacteristicEventTypes.GET, callback => {
 });
 
 hueCharacteristic.on(CharacteristicEventTypes.SET, (value, callback) => {
-	console.log(value);
 	// Get current colour.
 	let colour = getState().setColour;
 	let hsl = rgbToHsl(colour.red, colour.green, colour.blue);
