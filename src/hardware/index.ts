@@ -224,16 +224,16 @@ function loop() {
 
 	// Interpolate colours.
 	state.previousColour = {
-		red: lerp(state.previousColour.red, renderColour.red, delta),
-		green: lerp(state.previousColour.green, renderColour.green, delta),
-		blue: lerp(state.previousColour.blue, renderColour.blue, delta)
+		red: lerp(state.previousColour.red, renderColour.red * state.brightness, delta),
+		green: lerp(state.previousColour.green, renderColour.green * state.brightness, delta),
+		blue: lerp(state.previousColour.blue, renderColour.blue * state.brightness, delta)
 	};
 
 	// Write rounded colour to LEDs.
 	writeColour({
-		red: Math.round(state.previousColour.red * state.brightness),
-		green: Math.round(state.previousColour.green * state.brightness),
-		blue: Math.round(state.previousColour.blue * state.brightness)
+		red: Math.round(state.previousColour.red),
+		green: Math.round(state.previousColour.green),
+		blue: Math.round(state.previousColour.blue)
 	});
 	
 	// Schedule loop.
